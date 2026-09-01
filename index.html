@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f2f0ea" />
+    <title>Waleed Alharbi — Information Technology Portfolio</title>
+    <meta name="description" content="The bilingual portfolio of Waleed Alharbi, an Information Technology graduate building practical software, data and AI, cybersecurity, IT operations, and infrastructure solutions." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Waleed Alharbi — Information Technology Portfolio" />
+    <meta property="og:description" content="Software · Data & AI · Cybersecurity · IT Operations · Infrastructure" />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var q = new URLSearchParams(location.search);
+          var requestedTheme = q.get('theme');
+          var requestedLanguage = q.get('lang');
+          var savedTheme = localStorage.getItem('wa-theme');
+          var savedLanguage = localStorage.getItem('wa-language');
+          var theme = requestedTheme || savedTheme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          var language = requestedLanguage || savedLanguage || 'en';
+          if (requestedTheme === 'light' || requestedTheme === 'dark') localStorage.setItem('wa-theme', requestedTheme);
+          if (requestedLanguage === 'en' || requestedLanguage === 'ar') localStorage.setItem('wa-language', requestedLanguage);
+          document.documentElement.dataset.theme = theme === 'dark' ? 'dark' : 'light';
+          document.documentElement.dataset.capture = q.get('capture') || '';
+          document.documentElement.lang = language === 'ar' ? 'ar' : 'en';
+          document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+        } catch (_) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="grid" width="75" height="75" patternUnits="userSpaceOnUse">
+      <path d="M75 0H0V75" fill="none" stroke="#d2cec3" stroke-width="1" opacity=".6"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#f2f0ea"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <path d="M0 76h1200M60 0v630" stroke="#d2cec3"/>
+  <rect x="60" y="25" width="44" height="44" fill="none" stroke="#171815"/>
+  <text x="82" y="53" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#171815">WA</text>
+  <text x="123" y="53" font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="2" fill="#171815">INFORMATION TECHNOLOGY</text>
+  <circle cx="1048" cy="317" r="210" fill="none" stroke="#d2cec3"/>
+  <circle cx="1048" cy="317" r="104" fill="none" stroke="#c65737" stroke-dasharray="4 8"/>
+  <path d="M884 183l164 134 120-118M1048 317l126 114M1048 317L895 444" fill="none" stroke="#686860" opacity=".45"/>
+  <g fill="#c65737" stroke="#f2f0ea" stroke-width="6">
+    <circle cx="884" cy="183" r="11"/><circle cx="1168" cy="199" r="11"/><circle cx="1174" cy="431" r="11"/><circle cx="895" cy="444" r="11"/>
+  </g>
+  <text x="1048" y="344" text-anchor="middle" font-family="Arial,sans-serif" font-size="78" font-weight="700" letter-spacing="-8" fill="#171815">WA</text>
+  <text x="60" y="217" font-family="Arial,sans-serif" font-size="93" font-weight="700" letter-spacing="-7" fill="#171815">WALEED</text>
+  <text x="60" y="303" font-family="Arial,sans-serif" font-size="93" font-weight="700" letter-spacing="-7" fill="none" stroke="#171815" stroke-width="1.5">ALHARBI</text>
+  <text x="65" y="386" font-family="Arial,sans-serif" font-size="23" font-weight="600" fill="#171815">Information Technology Graduate</text>
+  <text x="65" y="430" font-family="Arial,sans-serif" font-size="17" fill="#686860">Software · Data &amp; AI · Cybersecurity · IT Operations · Infrastructure</text>
+  <circle cx="66" cy="544" r="6" fill="#c65737"/>
+  <text x="84" y="550" font-family="Arial,sans-serif" font-size="13" font-weight="600" letter-spacing="1.5" fill="#686860">AL-QASSIM · SAUDI ARABIA</text>
+</svg>
