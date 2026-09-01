@@ -26,7 +26,7 @@ function RouteEffects() {
 export default function App() {
   return (
     <SiteProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <RouteEffects />
         <Header />
         <Routes>

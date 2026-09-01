@@ -68,7 +68,9 @@ Additional captures: [Selected Work](screenshots/selected-work.png) · [BUNYA ca
 
 ## Deployment
 
-The repository is ready for Vercel, Netlify, or another static host with SPA route fallback support. A future custom domain can be connected without changing the application architecture.
+Live site: [waleed-alharbi.github.io/waleed-alharbi-portfolio](https://waleed-alharbi.github.io/waleed-alharbi-portfolio/)
+
+GitHub Pages deploys the production build automatically from `main`. The workflow sets the repository base path, publishes the `dist` artifact, and includes an SPA fallback so direct case-study URLs remain available on refresh. A future custom domain can be connected without changing the application architecture.
 
 ## Author
 
