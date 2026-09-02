@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#e9e4da" />
+    <meta name="description" content="Waleed Alharbi — Information Technology graduate building practical digital and technical solutions." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Waleed Alharbi — Information Technology</title>
+    <script>
+      (() => {
+        try {
+          const language = localStorage.getItem('waleed-language') === 'ar' ? 'ar' : 'en';
+          const savedTheme = localStorage.getItem('waleed-theme');
+          const theme = savedTheme === 'dark' || savedTheme === 'light'
+            ? savedTheme
+            : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.lang = language;
+          document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+          document.documentElement.dataset.theme = theme;
+        } catch { /* Local storage can be unavailable in hardened browsers. */ }
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
