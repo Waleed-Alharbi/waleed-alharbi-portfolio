@@ -1,0 +1,17 @@
+{
+  "name": "Waleed Alharbi Portfolio",
+  "short_name": "Waleed",
+  "description": "Information Technology portfolio by Waleed Alharbi.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070b0f",
+  "theme_color": "#070b0f",
+  "icons": [
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

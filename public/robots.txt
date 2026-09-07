@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://waleedalharbi.me/sitemap.xml

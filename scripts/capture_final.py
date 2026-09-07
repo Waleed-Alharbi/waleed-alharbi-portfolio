@@ -34,6 +34,8 @@ DETAIL_VIEWS = (
     CaptureView("hero", ("#top",)),
     CaptureView("about", ("#about",)),
     CaptureView("experience-timeline", ("#experience .journey-list", "#experience")),
+    CaptureView("graduation-project", ("#experience .journey-card-project",)),
+    CaptureView("work-intro", ("#work .work-intro",)),
     CaptureView(
         "work-featured",
         ("#work .featured-work-grid", "#work .project-feature:first-of-type"),
@@ -63,6 +65,7 @@ def new_context(
         script=f"""
             localStorage.setItem('waleed-language', {language!r});
             localStorage.setItem('waleed-theme', {theme!r});
+            sessionStorage.setItem('waleed-intro-seen', 'skip');
         """
     )
     return browser_context
@@ -145,6 +148,54 @@ def capture_home_matrix(browser: Browser) -> list[Path]:
             if language == "en" and theme == "light":
                 for view in DETAIL_VIEWS:
                     captured.append(capture_detail(page, prefix, view))
+
+                if viewport_name == "desktop":
+                    page.locator(".selected-work .project-details-button").first.click()
+                    page.locator("#project-details-dialog").wait_for(state="visible")
+                    dialog_path = OUTPUT / f"{prefix}-project-dialog.png"
+                    page.screenshot(path=dialog_path, animations="disabled")
+                    captured.append(dialog_path)
+                    page.keyboard.press("Escape")
+
+                    page.locator(".journey-media-button").click()
+                    page.locator(".award-lightbox").wait_for(state="visible")
+                    lightbox_path = OUTPUT / f"{prefix}-award-lightbox.png"
+                    page.screenshot(path=lightbox_path, animations="disabled")
+                    captured.append(lightbox_path)
+                    page.keyboard.press("Escape")
+
+                    page.locator(".journey-project-actions .project-details-button").click()
+                    page.locator("#graduation-project-dialog").wait_for(state="visible")
+                    graduation_path = OUTPUT / f"{prefix}-graduation-project-dialog.png"
+                    page.screenshot(path=graduation_path, animations="disabled")
+                    captured.append(graduation_path)
+                    page.keyboard.press("Escape")
+
+            if language == "ar" and theme == "light":
+                for view in DETAIL_VIEWS:
+                    captured.append(capture_detail(page, prefix, view))
+
+                if viewport_name == "desktop":
+                    page.locator(".selected-work .project-details-button").first.click()
+                    page.locator("#project-details-dialog").wait_for(state="visible")
+                    dialog_path = OUTPUT / f"{prefix}-project-dialog.png"
+                    page.screenshot(path=dialog_path, animations="disabled")
+                    captured.append(dialog_path)
+                    page.keyboard.press("Escape")
+
+                    page.locator(".journey-project-actions .project-details-button").click()
+                    page.locator("#graduation-project-dialog").wait_for(state="visible")
+                    graduation_path = OUTPUT / f"{prefix}-graduation-project-dialog.png"
+                    page.screenshot(path=graduation_path, animations="disabled")
+                    captured.append(graduation_path)
+                    page.keyboard.press("Escape")
+
+                    hero = page.locator("#top")
+                    hero.scroll_into_view_if_needed()
+                    page.locator(".hero-image-frame").hover()
+                    hover_path = OUTPUT / f"{prefix}-hero-hover.png"
+                    hero.screenshot(path=hover_path, animations="disabled")
+                    captured.append(hover_path)
 
             if viewport_name == "mobile":
                 page.evaluate("window.scrollTo(0, 0)")

@@ -76,11 +76,46 @@ export function Header() {
         animate={{ y: hidden && !open ? '-145%' : '0%', opacity: hidden && !open ? 0 : 1 }}
         transition={{ duration: reduceMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
       >
-        <a className="monogram" href="/#top" aria-label={language === 'en' ? 'Waleed Alharbi — home' : 'وليد الحربي — الرئيسية'}>
+        <a className="monogram header-home-mark" href="/#top" aria-label={language === 'en' ? 'Waleed Alharbi — home' : 'وليد الحربي — الرئيسية'}>
           <span>W</span><span>A</span>
         </a>
 
         <nav className="desktop-nav" aria-label={language === 'en' ? 'Primary navigation' : 'التنقل الرئيسي'}>
+          <a
+            className="nav-monogram"
+            href="/#top"
+            aria-label={language === 'en' ? 'Waleed Alharbi — home' : 'وليد الحربي — الرئيسية'}
+            aria-current={activeSection === null ? 'location' : undefined}
+            onClick={() => {
+              keepVisibleUntil.current = performance.now() + 900;
+              setActiveSection(null);
+              setHidden(false);
+            }}
+          >
+            <span>W</span><span>A</span>
+          </a>
+          <span className="nav-divider" aria-hidden="true" />
+          <motion.a
+            className="nav-home"
+            href="/#top"
+            aria-current={activeSection === null ? 'location' : undefined}
+            onClick={() => {
+              keepVisibleUntil.current = performance.now() + 900;
+              setActiveSection(null);
+              setHidden(false);
+            }}
+          >
+            {activeSection === null && (
+              <motion.span
+                className="nav-active-indicator"
+                layoutId="desktop-navigation-active"
+                transition={reduceMotion
+                  ? { duration: 0 }
+                  : { type: 'spring', stiffness: 470, damping: 38 }}
+              />
+            )}
+            <span className="nav-label">{t.nav.home}</span>
+          </motion.a>
           {links.map(([id, label]) => (
             <motion.a
               key={id}
@@ -104,6 +139,11 @@ export function Header() {
               <span className="nav-label">{label}</span>
             </motion.a>
           ))}
+          <span className="nav-divider" aria-hidden="true" />
+          <a className="nav-contact-cta" href="/#contact">
+            <span className="nav-cta-label">{t.hero.contact}</span>
+            <span className="nav-cta-arrow" aria-hidden="true">{language === 'ar' ? '↖' : '↗'}</span>
+          </a>
         </nav>
 
         <div className="header-actions">
@@ -111,7 +151,7 @@ export function Header() {
             <button className="header-control language-toggle" type="button" onClick={toggleLanguage} aria-label={language === 'en' ? 'عرض الموقع بالعربية' : 'View the site in English'}>
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span key={language} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: reduceMotion ? 0 : 0.16 }}>
-                  {language === 'en' ? 'EN' : 'ع'}
+                  {language === 'ar' ? 'EN' : 'ع'}
                 </motion.span>
               </AnimatePresence>
             </button>

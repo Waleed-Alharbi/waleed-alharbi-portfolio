@@ -10,27 +10,6 @@ import { Reveal } from '../components/Reveal';
 import { ProjectCover } from '../components/ProjectCover';
 import { SectionDecor } from '../components/SectionDecor';
 
-const workUi = {
-  en: {
-    github: 'GitHub',
-    details: 'Details',
-    openDetails: 'Open project details',
-    close: 'Close project details',
-    summary: 'Project summary',
-    fullCaseStudy: 'View full case study',
-    repository: 'Open GitHub repository',
-  },
-  ar: {
-    github: 'GitHub',
-    details: 'التفاصيل',
-    openDetails: 'فتح تفاصيل المشروع',
-    close: 'إغلاق تفاصيل المشروع',
-    summary: 'ملخص المشروع',
-    fullCaseStudy: 'عرض صفحة المشروع كاملة',
-    repository: 'فتح مستودع GitHub',
-  },
-} as const;
-
 type ProjectActionProps = {
   project: PortfolioProject;
   compact?: boolean;
@@ -39,7 +18,7 @@ type ProjectActionProps = {
 
 function ProjectActions({ project, compact = false, onDetails }: ProjectActionProps) {
   const { language } = useSite();
-  const ui = workUi[language];
+  const t = content[language].work;
   const title = project.title[language];
 
   return (
@@ -49,21 +28,21 @@ function ProjectActions({ project, compact = false, onDetails }: ProjectActionPr
         href={project.github}
         target="_blank"
         rel="noreferrer"
-        aria-label={`${ui.repository}: ${title}`}
+        aria-label={`${t.github}: ${title}`}
       >
         <FaGithub aria-hidden="true" focusable="false" />
-        <span>{ui.github}</span>
+        <span>{t.github}</span>
       </a>
       <button
         className="project-action project-details-button"
         type="button"
         aria-haspopup="dialog"
         aria-controls="project-details-dialog"
-        aria-label={`${ui.openDetails}: ${title}`}
+        aria-label={`${t.details}: ${title}`}
         onClick={(event) => onDetails(project, event.currentTarget)}
       >
         <LuInfo aria-hidden="true" focusable="false" />
-        <span>{ui.details}</span>
+        <span>{t.details}</span>
       </button>
     </div>
   );
@@ -92,11 +71,20 @@ function FeaturedProject({ project, index, onDetails }: ProjectCardProps) {
       </div>
       <Reveal className="project-preview-reveal" delay={stagger + 0.18}>
         <div className="project-preview">
-          <ProjectCover project={project} />
+          {project.cardImage ? (
+            <img
+              className="project-card-poster"
+              src={project.cardImage.src}
+              alt={project.cardImage.alt[language]}
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <ProjectCover project={project} />
+          )}
         </div>
       </Reveal>
       <Reveal className="project-footer" delay={stagger + 0.24}>
-        <ul lang="en" dir="ltr">{project.stack.slice(0, 5).map((item) => <li key={item}>{item}</li>)}</ul>
         <ProjectActions project={project} onDetails={onDetails} />
       </Reveal>
     </article>
@@ -108,7 +96,7 @@ function CompactProject({ project, index, onDetails }: ProjectCardProps) {
   const projectRef = useRef<HTMLElement>(null);
   const isInView = useInView(projectRef, { amount: 0.34 });
   const reduceMotion = useReducedMotion();
-  const image = project.images[0];
+  const image = project.cardImage ?? project.images[0];
 
   return (
     <article ref={projectRef} className={`compact-project project-feature project-${project.theme} ${isInView && !reduceMotion ? 'is-in-view' : ''}`}>
@@ -121,7 +109,6 @@ function CompactProject({ project, index, onDetails }: ProjectCardProps) {
           <div className="compact-project-copy">
             <div className="compact-project-meta">
               <span>{project.category[language]}</span>
-              <span lang="en" dir="ltr">{project.stack[0]}</span>
             </div>
             <h4>{project.title[language]}</h4>
             <p>{project.summary[language]}</p>
@@ -135,15 +122,15 @@ function CompactProject({ project, index, onDetails }: ProjectCardProps) {
 
 type ProjectDetailsDialogProps = {
   project: PortfolioProject | null;
-  dialogRef: React.RefObject<HTMLDialogElement | null>;
-  closeButtonRef: React.RefObject<HTMLButtonElement | null>;
+  dialogRef: React.RefObject<HTMLDialogElement>;
+  closeButtonRef: React.RefObject<HTMLButtonElement>;
   onClose: () => void;
   onRequestClose: () => void;
 };
 
 function ProjectDetailsDialog({ project, dialogRef, closeButtonRef, onClose, onRequestClose }: ProjectDetailsDialogProps) {
   const { language } = useSite();
-  const ui = workUi[language];
+  const t = content[language].work;
   const titleId = project ? `project-dialog-title-${project.slug}` : undefined;
   const summaryId = project ? `project-dialog-summary-${project.slug}` : undefined;
 
@@ -180,7 +167,7 @@ function ProjectDetailsDialog({ project, dialogRef, closeButtonRef, onClose, onR
               className="project-dialog-close"
               type="button"
               ref={closeButtonRef}
-              aria-label={ui.close}
+              aria-label={t.close}
               onClick={onRequestClose}
             >
               <LuX aria-hidden="true" focusable="false" />
@@ -188,7 +175,7 @@ function ProjectDetailsDialog({ project, dialogRef, closeButtonRef, onClose, onR
           </header>
 
           <div className="project-dialog-summary" id={summaryId}>
-            <span>{ui.summary}</span>
+            <span>{t.summaryLabel}</span>
             <p>{project.overview[language]}</p>
           </div>
 
@@ -204,10 +191,10 @@ function ProjectDetailsDialog({ project, dialogRef, closeButtonRef, onClose, onR
               rel="noreferrer"
             >
               <FaGithub aria-hidden="true" focusable="false" />
-              <span>{ui.repository}</span>
+              <span>{t.github}</span>
             </a>
             <Link className="project-dialog-link project-dialog-case" to={`/work/${project.slug}`} onClick={onRequestClose}>
-              <span>{ui.fullCaseStudy}</span>
+              <span>{t.fullCaseStudy}</span>
               <LuArrowUpRight aria-hidden="true" focusable="false" />
             </Link>
           </div>
@@ -224,8 +211,11 @@ export function SelectedWork() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
-  const featuredProjects = projects.filter((project) => project.slug === 'soc' || project.slug === 'basira');
-  const compactProjects = projects.filter((project) => project.slug === 'helpdesk' || project.slug === 'waqttech' || project.slug === 'bunya');
+  const featuredProjects = projects.filter((project) => project.slug === 'helpdesk' || project.slug === 'waqttech');
+  const compactProjectOrder = ['basira', 'soc', 'bunya'];
+  const compactProjects = projects
+    .filter((project) => compactProjectOrder.includes(project.slug))
+    .sort((first, second) => compactProjectOrder.indexOf(first.slug) - compactProjectOrder.indexOf(second.slug));
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -255,7 +245,7 @@ export function SelectedWork() {
       <div className="work-intro section-shell">
         <Reveal><div className="section-index light-index"><span>{t.index}</span><i /></div></Reveal>
         <Reveal delay={0.06}><h2>{t.heading.split('\n').map((line) => <span key={line}>{line}</span>)}</h2></Reveal>
-        <Reveal className="work-intro-note" delay={0.12}><span>05</span><p>{language === 'en' ? 'Selected digital products, presented as systems rather than thumbnails.' : 'منتجات رقمية مختارة، تُعرض كأنظمة متكاملة لا كصور مصغرة.'}</p></Reveal>
+        <Reveal className="work-intro-note" delay={0.12}><span>05</span><p>{t.description}</p></Reveal>
       </div>
 
       <div className="featured-work-grid section-shell">

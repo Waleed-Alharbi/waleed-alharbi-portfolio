@@ -6,6 +6,7 @@ import '@fontsource/instrument-serif/400.css';
 import '@fontsource/ibm-plex-sans-arabic/300.css';
 import '@fontsource/ibm-plex-sans-arabic/400.css';
 import '@fontsource/ibm-plex-sans-arabic/500.css';
+import '@fontsource/amiri/700.css';
 import './styles/global.css';
 import './styles/reference.css';
 import { SiteProvider } from './context/SiteContext';

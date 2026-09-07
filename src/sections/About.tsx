@@ -1,4 +1,5 @@
 import { FaLinkedinIn } from 'react-icons/fa';
+import { LuFileText } from 'react-icons/lu';
 import { useSite } from '../context/SiteContext';
 import { content } from '../i18n/content';
 import { profile } from '../data/profile';
@@ -45,7 +46,7 @@ export function About() {
                 <span>{t.linkedin}</span><i aria-hidden="true"><FaLinkedinIn focusable="false" /></i>
               </a>
               <a className="about-card-link" href={profile.cv} target="_blank" rel="noreferrer">
-                <span>{t.cv}</span><i aria-hidden="true">PDF</i>
+                <span>{t.cv}</span><i aria-hidden="true"><LuFileText focusable="false" /></i>
               </a>
             </div>
           </aside>
