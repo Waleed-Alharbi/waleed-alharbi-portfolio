@@ -4,14 +4,15 @@ import { useSite } from '../context/SiteContext';
 import { projectBySlug } from '../data/projects';
 
 const SITE_URL = 'https://waleedalharbi.me';
+const SITE_TITLE = 'Waleed Alharbi — Portfolio';
 
 const homeCopy = {
   en: {
-    title: 'Waleed Alharbi | Information Technology Portfolio',
+    title: SITE_TITLE,
     description: 'Information Technology graduate building practical solutions across software, data, AI, cybersecurity, cloud and IT operations.',
   },
   ar: {
-    title: 'وليد الحربي | معرض أعمال تقنية المعلومات',
+    title: SITE_TITLE,
     description: 'خريج تقنية معلومات يبني حلولًا عملية في البرمجيات والبيانات والذكاء الاصطناعي والأمن السيبراني والسحابة وعمليات تقنية المعلومات.',
   },
 } as const;
@@ -34,7 +35,7 @@ export function SiteMetadata() {
     const slug = location.pathname.match(/^\/work\/([^/]+)$/)?.[1];
     const project = projectBySlug(slug);
     const home = homeCopy[language];
-    const title = project ? `${project.title[language]} | Waleed Alharbi` : home.title;
+    const title = home.title;
     const description = project ? project.summary[language] : home.description;
     const canonicalUrl = new URL(location.pathname, SITE_URL).toString();
     const socialImage = new URL('/social-preview.jpg', SITE_URL).toString();
